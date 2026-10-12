@@ -13,7 +13,14 @@ jobs:
       - name: Checkout mã nguồn
         uses: actions/checkout@v5
 
-      - name: Thiết lập môi trường Java JDK 17
+      - name: Tạo các tệp cấu hình Gradle giả lập cho Cache
+        run: |
+          mkdir -p gradle/wrapper
+          echo "plugins { id 'java' }" > build.gradle
+          echo "rootProject.name = 'demo'" > settings.gradle
+          touch gradle/wrapper/gradle-wrapper.properties
+
+      - name: Thiết lập môi trường Java JDK 17 và bật Gradle Cache
         uses: actions/setup-java@v5
         with:
           java-version: '17'
